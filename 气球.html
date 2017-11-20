@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>扎气球</title>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            background-color: black;
+        }
+        span{
+            display: inline-block;
+            color: white;
+        }
+        .circle{
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background-color: red;
+            opacity: 0.5;
+            position: absolute;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var div=[];
+            var num=0;
+            var n=Math.floor(Math.random()*10)+10;
+            var body=document.getElementById('body');
+            var span=document.getElementsByTagName('span')[1];
+            function create(){
+                for(var i=0;i<n;i++){
+                    div[i]=document.createElement('div');
+                    var x=Math.random()*1200;
+                    var y=Math.random()*600;
+                    var a=Math.random()*255;
+                    var b=Math.random()*255;
+                    var c=Math.random()*255;
+                    div[i].className='circle';
+                    div[i].style.left=x+'px';
+                    div[i].style.top=window.innerHeight-60-y+'px';
+                    div[i].style.backgroundColor='rgb('+a+','+b+','+c+')';
+                    body.appendChild(div[i]);
+                }
+                up();
+            }
+            function up(){
+                setInterval(function(){
+                    for(var i=0;i<n;i++){
+                        var speed=1;
+                        div[i].style.top=div[i].offsetTop-speed*speed+'px';
+                        if(div[i].offsetTop<=0){
+                            // div[i].style.top=window.innerHeight-60-speed*speed+'px';
+                            var x=Math.random()*1200;
+                            var y=Math.random()*600;
+                            var a=Math.random()*255;
+                            var b=Math.random()*255;
+                            var c=Math.random()*255;
+                            div[i].className='circle';
+                            div[i].style.left=x+'px';
+                            div[i].style.top=window.innerHeight-60+'px';
+                            div[i].style.backgroundColor='rgb('+a+','+b+','+c+')';
+                            body.appendChild(div[i]);
+                        }
+                        div[i].onmouseover=function(){
+                            this.style.opacity=1;
+                        }
+                        div[i].onmouseout=function(){
+                            div.forEach(function(item,index){
+                                item.style.opacity=0.5;
+                            })
+                        }
+                        div[i].onclick=function(event){
+                            // body.removeChild(this);
+                            // var x=Math.random()*1200;
+                            // var y=Math.random()*600;
+                            // var a=Math.random()*255;
+                            // var b=Math.random()*255;
+                            // var c=Math.random()*255;
+                            // div[i].className='circle';
+                            // div[i].style.left=x+'px';
+                            // div[i].style.top=window.innerHeight-60+'px';
+                            // div[i].style.backgroundColor='rgb('+a+','+b+','+c+')';
+                            // body.appendChild(div[i]);
+                            // num++;
+                            // alert(event.clientX);
+                            // alert(event.clientY);
+                            // alert(this.offsetLeft);
+                            // alert(this.offsetTop);
+                            if(event.clientX>=this.offsetLeft&&event.clientX<=this.offsetLeft+60&&event.clientY-180<this.offsetTop&&event.clientY>this.offsetTop){
+                                body.removeChild(this);
+                            }
+                            
+                        }
+                    }
+                },1)
+            }
+            create();
+        }
+    </script>
+</head>
+<body>
+    <span>点击个数<span><span>0</span>
+    <div id="body"></div>
+</body>
+</html>

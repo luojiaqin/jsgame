@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+        }
+          .redCircle{
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-image: url('2.jpg');
+            background-size: 100% 100%;
+            box-shadow: 0px 0px 2px 2px;
+            position: absolute;
+        }  
+        .smallCircle{
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .blueCircle{
+             background-image: url('1.jpg'); 
+             background-size: 100% 100%;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            function smallCircle(key){
+                var offTop1=key.offsetTop;
+                var speed=2;
+                // var offTop2;
+                setInterval(function(){
+                    key.style.top=key.offsetTop-speed+'px';
+                    // alert(offTop1);
+                    // alert(key.offsetTop);
+                    // if(offTop1-key.offsetTop>10||offTop1-key.offsetTop<0){
+                    //     speed=-0.2;
+                    // }
+                    // alert();
+                },1)
+            }
+            function redCircle(e){
+                var div=document.createElement('div');
+                div.className='redCircle';
+                document.body.appendChild(div);
+                setInterval(function(){
+                    document.onmousemove=function(e){
+                        div.style.left=e.clientX-5+'px';
+                        div.style.top=e.clientY-5+'px';
+                        for(var i=0;i<n;i++){
+                            if(div.offsetLeft>=d[i].offsetLeft & div.offsetLeft<=d[i].offsetLeft+d[i].offsetWidth & div.offsetTop>=d[i].offsetTop & div.offsetTop<=d[i].offsetTop+d[i].offsetHeight){
+                                smallCircle(d[i]);
+                            }
+                        }
+                    }
+                },1)
+            }
+            var n=Math.floor(Math.random()*10)+10;
+            var d=[];
+            for(var i=0;i<n;i++){
+                d[i]=document.createElement('div');
+                var w=Math.random()*40+20;
+                var l=Math.random()*1200+10;
+                var t=Math.random()*700+10;
+                d[i].className='blueCircle';
+                d[i].style.width=w+'px';
+                d[i].style.height=w+'px';
+                // d[i].style.backgroundColor='blue';
+                d[i].style.boxShadow='0px 0px 1px 1px white'
+                // d[i].style.opacity=0.5;
+                d[i].style.borderRadius=w/2+'px';
+                d[i].style.position='absolute';
+                d[i].style.left=l+'px';
+                d[i].style.top=t+'px';
+                document.body.appendChild(d[i]);
+            }
+            redCircle();
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

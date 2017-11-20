@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #000;
+            overflow: hidden;
+        }
+        .firework{
+            width: 10px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+        }
+        .fires{
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+   
+    <script type="text/javascript">
+        // 面向过程
+            // 生成子弹  子弹移动鼠标点击  生成烟花粒子    粒子散开
+        //生成子弹
+        document.onclick=function(ev){
+            //获取鼠标坐标位置
+            // console.log(this);//this作用域
+            // console.log(arguments);//实参列表
+            var ev=ev || window.event;
+            x=ev.clientX;
+            y=ev.clientY;
+            h=window.innerHeight;
+            //生成烟花
+            firework();
+        }
+        var timer=null;
+        function firework(){
+            var oDiv=document.createElement("div");
+            oDiv.className="firework";
+            oDiv.style.left=x+"px";
+            oDiv.style.top=h+"px";
+            //把div添加到body里面
+            document.body.appendChild(oDiv);
+            //让子弹往上面移动
+            var speed=45;
+            //定时器，多少毫秒执行一次里面的函数
+            setInterval(function(){
+                oDiv.style.top=oDiv.offsetTop-speed+"px";
+                if(oDiv.offsetTop<=y)
+                {
+                    clearInterval(timer);
+                    //先清除子弹
+                    document.body.removeChild(oDiv);
+                    //生成烟花粒子
+                    creatFires();
+                }
+            },30)
+       }
+       //生成烟花粒子
+       function creatFires(){
+            var n=Math.ceil(Math.random()*50+50);//50--100   ceil去除小数
+            var fires=[];
+            for(var i=0;i<n;i++){
+                fires[i]=document.createElement('div');
+                fires[i].className="fires";
+                fires[i].style.left=x+"px";
+                fires[i].style.top=y+"px";
+                var color='#'+Math.floor(Math.random()*256).toString(10);
+                fires[i].style.backgroundColor=color;
+                fires[i].style.boxShadow='0 0 2px 2px '+color;
+                // fires[i].style.opacity=0.5;
+                //给每个烟花粒子一个随机的速度值
+                fires[i].speedX=Math.random()*20-10;//-10~10
+                fires[i].speedY=Math.random()*20-10;
+                document.body.appendChild(fires[i]);
+            }
+            setInterval(function(){
+                for(var i=0;i<n;i++){
+                    var a=fires[i].offsetLeft+fires[i].speedX;
+                    fires[i].style.left=a+'px';
+                    var b=fires[i].offsetTop+fires[i].speedY;
+                    fires[i].style.top=b+'px';
+                    // fires[i].speedX+=1;
+                    fires[i].speedY+=1.5;
+                }
+            },30)
+       }
+    </script>
+</body>
+</html>
